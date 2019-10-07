@@ -50,10 +50,7 @@
     "postbuild": "vsce package",
     "vscode:prepublish": "tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/panelssh/ets-extension.git"
-  },
+  "repository": "https://github.com/panelssh/ets-extension",
   "bugs": {
     "url": "https://github.com/panelssh/ets-extension/issues"
   },
