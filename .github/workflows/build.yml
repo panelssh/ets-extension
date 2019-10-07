@@ -1,0 +1,22 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Use Node.js 10
+        uses: actions/setup-node@master
+        with:
+          node-version: 10
+      - name: NPM Install
+        run: npm i
+      - name: VSCE Publish
+        run: ./node_modules/.bin/vsce publish -p $TOKEN
+        env:
+          TOKEN: ${{ secrets.TOKEN }}

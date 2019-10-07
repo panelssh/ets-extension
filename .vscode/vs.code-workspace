@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "../"
+		}
+	],
+	"settings": {
+    "turboConsoleLog.quote": "'",
+		"turboConsoleLog.addSemicolonInTheEnd": true,
+		"npm.fetchOnlinePackageInfo": false,
+		"turboConsoleLog.logMessagePrefix": "LOG",
+		"javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.quoteStyle": "single",
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+		"typescript.updateImportsOnFileMove.enabled": "always",
+		"search.exclude": {
+			"**/.git": true
+		},
+		"files.eol": "\r\n",
+		"files.exclude": {
+			"**/node_modules": true
+		},
+		"tslint.exclude": [
+			"**/src/templates/**.ts"
+		],
+		"ets.target": "test"
+  }
+}

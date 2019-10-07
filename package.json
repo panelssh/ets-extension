@@ -1,0 +1,69 @@
+{
+  "name": "ets-extension",
+  "displayName": "ExpressJS TypeScript Extension",
+  "icon": "icon.png",
+  "version": "1.0.0",
+  "description": "ExpressJS with TypeScript Package Extension for Visual Studio Code",
+  "author": "Panel SSH <panelssh@hotmail.com>",
+  "license": "MIT",
+  "publisher": "panelssh",
+  "engines": {
+    "vscode": "^1.24.0"
+  },
+  "categories": [
+    "Snippets",
+    "Language Packs"
+  ],
+  "keywords": [
+    "ExpressJS",
+    "Typescript",
+    "MongoDB",
+    "ExpressJS Typescript MongoDB"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:ets.rcm"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Express TypeScript Extension Configuration",
+      "properties": {
+        "ets.target": {
+          "type": "string",
+          "default": "src",
+          "description": "Folder path to save."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "ets.rcm",
+        "title": "Create Router, Controller and model"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "prebuild": "rimraf ./dist && rimraf ./ets-extension-1.0.0.vsix",
+    "build": "tsc",
+    "postbuild": "vsce package",
+    "vscode:prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/panelssh/ets-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/panelssh/ets-extension/issues"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.7",
+    "tslint": "^5.20.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "typescript": "^3.6.3",
+    "vsce": "^1.67.1",
+    "vscode": "^1.1.36"
+  }
+}
