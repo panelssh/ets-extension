@@ -1,0 +1,22 @@
+name: dev
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  dev:
+    name: Dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Use Node.js 10
+        uses: actions/setup-node@master
+        with:
+          node-version: 10
+      - name: NPM Install
+        run: npm i
+      - name: TSLint
+        run: ./node_modules/.bin/tslint -p tsconfig.json -c tslint.json
+      - name: TSC
+        run: tsc
