@@ -2,7 +2,7 @@
   "name": "ets-extension",
   "displayName": "ExpressJS TypeScript Extension",
   "icon": "icon.png",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ExpressJS with TypeScript Package Extension for Visual Studio Code",
   "author": "Panel SSH <panelssh@hotmail.com>",
   "license": "MIT",
@@ -39,24 +39,41 @@
     "commands": [
       {
         "command": "ets.rcm",
-        "title": "Create Router, Controller and model"
+        "title": "ETS Extension: Create Router, Controller and model"
       }
     ]
   },
+  "keybindings": [
+    {
+      "command": "ets.rcm",
+      "key": "alt+x r",
+      "mac": "alt+x r"
+    }
+  ],
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "prebuild": "rimraf ./dist && rimraf ./ets-extension-1.0.0.vsix",
-    "build": "tsc",
-    "postbuild": "vsce package",
+    "prebuild": "tslint -p tsconfig.json -c tslint.json",
+    "build": "npm-run-all clean:** package:** clean:**",
+    "clean:dist": "rm -rf ./dist",
+    "clean:visx": "rm -rf ./ets-extension-1.0.1.vsix",
+    "package:uninstall": "code --uninstall-extension panelssh.ets-extension",
+    "package:removepath": "rm -rf ~/.vscode/extensions/panelssh.ets-extension-1.0.1",
+    "package:build": "vsce package",
+    "package:install": "code --install-extension ets-extension-1.0.1.vsix --force",
     "vscode:prepublish": "tsc"
   },
-  "repository": "https://github.com/panelssh/ets-extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/panelssh/ets-extension"
+  },
   "bugs": {
-    "url": "https://github.com/panelssh/ets-extension/issues"
+    "url": "https://github.com/panelssh/ets-extension/issues",
+    "email": "panelssh@hotmail.com"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.7.7",
+    "npm-run-all": "^4.1.5",
     "tslint": "^5.20.0",
     "tslint-config-airbnb": "^5.11.2",
     "typescript": "^3.6.3",

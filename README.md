@@ -4,7 +4,7 @@
 [![Latest Release](https://vsmarketplacebadge.apphb.com/version-short/panelssh.ets-extension.svg)](https://marketplace.visualstudio.com/items?itemName=panelssh.ets-extension)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs/panelssh.ets-extension.svg)](https://marketplace.visualstudio.com/items?itemName=panelssh.ets-extension)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/panelssh.ets-extension.svg)](https://marketplace.visualstudio.com/items?itemName=panelssh.ets-extension#review-details)
-[![Fork](https://img.shields.io/github/forks/panelssh/ets-extension.svg)](https://github.com/panelssh/ets-extension)
+[![Fork](https://img.shields.io/github/forks/panelssh/ets-extension.svg)](https://github.com/panelssh/ets-extension/fork)
 
 ## Features
 

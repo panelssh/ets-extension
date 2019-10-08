@@ -8,7 +8,8 @@
     "codezombiech.gitignore",
     "esbenp.prettier-vscode",
     "ms-vscode.vscode-typescript-tslint-plugin",
-		"chakrounanas.turbo-console-log"
+		"chakrounanas.turbo-console-log",
+		"redhat.vscode-yaml"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [

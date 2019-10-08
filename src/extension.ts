@@ -2,23 +2,34 @@
 import { ExtensionContext, commands, workspace, window } from 'vscode';
 // builds
 import { rcm } from './build';
+// helpers
+import { camelize } from './helpers';
 
 const path = workspace.workspaceFolders[0].uri.fsPath;
 
-export const activate = (context: ExtensionContext) => {
+/**
+ * Activation method
+ * @param {ExtensionContext} context
+ * @docs https://code.visualstudio.com/api/references/vscode-api#ExtensionContext
+ */
+export function activate(context: ExtensionContext) {
   commands.registerCommand('ets.rcm', () => {
-    const options = { prompt: 'Name of RCM (Router, Controller and Model)', placeHolder: 'Set RCM name' };
-    window.showInputBox(options).then((value: string) => {
-
-      if (value.length === 0) return window.showErrorMessage('You must put name of RCM!');
+    window.showInputBox({
+      prompt: 'Name of RCM (Router, Controller and Model)',
+      placeHolder: 'Set RCM name, eg: User',
+      validateInput: (text: string): string | undefined => {
+        if (!text || text.length === 0) return 'Can\'t be empty!';
+        return undefined;
+      },
+    }).then((text: string) => {
 
       const src = workspace.getConfiguration('ets').target || 'src';
-      const name = value.toLowerCase();
+      const name = camelize(text);
       const types = ['routers', 'controllers', 'models'];
 
       for (const [i, type] of types.entries()) {
         if (!rcm(type, path, src, name)) {
-          window.showErrorMessage(`${src}/${type}/${name}.ts already exists!`);
+          window.showErrorMessage(`${src}/${type}/${name.toLowerCase()}.ts already exists!`);
           break;
         }
         if (i === types.length - 1) window.showInformationMessage('Created RCM file!');
@@ -27,6 +38,4 @@ export const activate = (context: ExtensionContext) => {
     });
   });
 
-};
-
-export const deactivate = () => console.log('Deactivate');
+}
