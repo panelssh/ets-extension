@@ -2,7 +2,7 @@
   "name": "ets-extension",
   "displayName": "ExpressJS TypeScript Extension",
   "icon": "icon.png",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "ExpressJS with TypeScript Package Extension for Visual Studio Code",
   "author": "Panel SSH <panelssh@hotmail.com>",
   "license": "MIT",
@@ -55,11 +55,11 @@
     "prebuild": "tslint -p tsconfig.json -c tslint.json",
     "build": "npm-run-all clean:** package:** clean:**",
     "clean:dist": "rm -rf ./dist",
-    "clean:visx": "rm -rf ./ets-extension-1.0.1.vsix",
+    "clean:visx": "rm -rf ./ets-extension-1.1.0.vsix",
     "package:uninstall": "code --uninstall-extension panelssh.ets-extension",
-    "package:removepath": "rm -rf ~/.vscode/extensions/panelssh.ets-extension-1.0.1",
+    "package:removepath": "rm -rf ~/.vscode/extensions/panelssh.ets-extension-1.1.0",
     "package:build": "vsce package",
-    "package:install": "code --install-extension ets-extension-1.0.1.vsix --force",
+    "package:install": "code --install-extension ets-extension-1.1.0.vsix --force",
     "vscode:prepublish": "tsc"
   },
   "repository": {

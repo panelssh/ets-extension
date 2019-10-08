@@ -14,18 +14,20 @@ const path = workspace.workspaceFolders[0].uri.fsPath;
  */
 export function activate(context: ExtensionContext) {
   commands.registerCommand('ets.rcm', () => {
+
+    const types = ['routers', 'controllers', 'models', 'middleware', 'dto', 'interfaces'];
+
     window.showInputBox({
       prompt: 'Name of RCM (Router, Controller and Model)',
       placeHolder: 'Set RCM name, eg: User',
-      validateInput: (text: string): string | undefined => {
-        if (!text || text.length === 0) return 'Can\'t be empty!';
+      validateInput: (nameRCM: string): string | undefined => {
+        if (!nameRCM || nameRCM.length === 0) return 'Can\'t be empty!';
         return undefined;
       },
-    }).then((text: string) => {
+    }).then((nameRCM: string) => {
 
       const src = workspace.getConfiguration('ets').target || 'src';
-      const name = camelize(text);
-      const types = ['routers', 'controllers', 'models'];
+      const name = camelize(nameRCM);
 
       for (const [i, type] of types.entries()) {
         if (!rcm(type, path, src, name)) {

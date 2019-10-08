@@ -8,6 +8,11 @@ import MyRouter from '../core/router';
 import MyRequest from '../core/request';
 // controller
 import controller from '../controllers/${name}';
+// dto
+import * as dto from '../dto/${name}';
+// middleware
+import { validationQuery, validationBody } from '../middleware/validation';
+import { validationId } from '../middleware/${name}';
 
 class ${cname}Router implements MyRouter {
 
@@ -22,14 +27,14 @@ class ${cname}Router implements MyRouter {
   private init() {
     // LIST AND ADD
     this.router
-      .get(this.path, this.all)
-      .post(this.path, this.add);
+      .get(this.path, validationQuery(dto.${cname}List), this.all)
+      .post(this.path, validationBody(dto.${cname}Add), this.add);
 
     // GET, MOD AND DEL
     this.router
-      .get(\`\${this.path}/:${name}_id\`, this.get)
-      .patch(\`\${this.path}/:${name}_id\`, this.mod)
-      .delete(\`\${this.path}/:${name}_id\`, this.del);
+      .get(\`\${this.path}/:${name}_id\`, validationId, this.get)
+      .patch(\`\${this.path}/:${name}_id\`, validationBody(dto.${cname}Mod), this.mod)
+      .delete(\`\${this.path}/:${name}_id\`, validationId, this.del);
   }
 
   private async all(request: MyRequest, response: Response, next: NextFunction) {
@@ -39,6 +44,7 @@ class ${cname}Router implements MyRouter {
     } catch (error) {
       return next(error);
     }
+
     response.send(res);
   }
 
@@ -49,6 +55,7 @@ class ${cname}Router implements MyRouter {
     } catch (error) {
       return next(error);
     }
+
     response.send(res);
   }
 
@@ -59,6 +66,7 @@ class ${cname}Router implements MyRouter {
     } catch (error) {
       return next(error);
     }
+
     response.send(res);
   }
 
@@ -69,6 +77,7 @@ class ${cname}Router implements MyRouter {
     } catch (error) {
       return next(error);
     }
+
     response.send(res);
   }
 
@@ -79,6 +88,7 @@ class ${cname}Router implements MyRouter {
     } catch (error) {
       return next(error);
     }
+
     response.send(res);
   }
 
@@ -96,57 +106,73 @@ import model from '../models/${name}';
 
 class ${cname}Controller {
 
-  private model = model;
-
   public async all(request: MyRequest) {
     // const query = request.query;
+
+    let ${name};
     try {
-      return await this.model.find();
+      ${name} = await model.find().select('-password');
     } catch (error) {
       throw new Exception(500, error);
     }
+
+    return ${name};
   }
 
   public async get(request: MyRequest) {
     const params = request.params;
+
+    let ${name};
     try {
-      return await this.model.findById(params.${name}_id);
+      ${name} = await model.findById(params.${name}_id).select('-password');
     } catch (error) {
       throw new Exception(500, error);
     }
+
+    return ${name};
   }
 
   public async add(request: MyRequest) {
     // const files = request.files;
     const body = request.body;
-    const save = new this.model({
-      ...body,
-    });
+
+    let ${name};
+    const save = new model({ ...body });
     try {
-      return await save.save();
+      ${name} = await save.save();
     } catch (error) {
       throw new Exception(500, error);
     }
+
+    return ${name};
   }
 
   public async mod(request: MyRequest) {
     const params = request.params;
     // const files = request.files;
     const body = request.body;
+
+    let ${name};
     try {
-      return await this.model.findByIdAndUpdate(params.${name}_id, body, { new: true });
+      ${name} = await model.findByIdAndUpdate(params.${name}_id, body, { new: true });
     } catch (error) {
       throw new Exception(500, error);
     }
+
+    return ${name};
   }
 
   public async del(request: MyRequest) {
     const params = request.params;
+
+    let ${name};
     try {
-      return await this.model.findByIdAndDelete(params.${name}_id);
+      ${name} = await model.findByIdAndDelete(params.${name}_id);
     } catch (error) {
       throw new Exception(500, error);
     }
+
+    return ${name};
   }
 
 }
@@ -156,7 +182,7 @@ export default new ${cname}Controller();\n`,
 // dependency
 import { Document, Schema, model } from 'mongoose';
 // interface
-// import { ${cname} } from '../interfaces';
+import { ${cname} } from '../interfaces';
 
 const schema = new Schema({
   name: {
@@ -164,6 +190,71 @@ const schema = new Schema({
   },
 });
 
-export default model<Document>('${cname}', schema);\n`,
+export default model<${cname} & Document>('${cname}', schema);\n`,
+    middleware: `// AUTO GENERATED [RCM: https://github.com/panelssh/ets-extension]
+// dependency
+import { Response, NextFunction } from 'express';
+// core
+import MyRequest from '../core/request';
+import { HttpException } from '../core/exception';
+// model
+import model from '../models/${name}';
+
+export async function validationId(request: MyRequest, response: Response, next: NextFunction) {
+  const params = request.params;
+
+  if (params.${name}_id === undefined) return next(new HttpException(404, 'page not found'));
+
+  let ${name};
+  try {
+    ${name} = await model.findById(params.${name}_id);
+  } catch (error) {
+    return next(new HttpException(404, 'page not found'));
   }
+
+  if (${name} === null) return next(new HttpException(404, 'page not found'));
+
+  next();
+}\n`,
+    dto: `// AUTO GENERATED [RCM: https://github.com/panelssh/ets-extension]
+// dependency
+import {  IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+// dto
+import List from './_list';
+
+export class ${cname}List extends List {
+
+  @IsOptional()
+  @IsIn(['name'])
+  public sorts: string;
+
+  // @IsOptional()
+  // @IsIn([])
+  // public where: string;
+
+  // @IsOptional()
+  // @IsString()
+  // public value: string;
+
+}
+
+export class ${cname}Add {
+
+  @IsNotEmpty()
+  @IsString()
+  public name: string;
+
+}
+
+export class ${cname}Mod {
+
+  @IsNotEmpty()
+  @IsString()
+  public name: string;
+
+}\n`,
+    interfaces: `export interface ${cname} {
+  name: string;
+}\n\n`,
+  };
 }

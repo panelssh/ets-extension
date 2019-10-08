@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build",
+      "label": "Build Dev",
       "type": "shell",
       "command": "npm",
       "args": [
@@ -13,6 +13,24 @@
       ],
       "group": {
         "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "clear": true,
+        "focus": false,
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Delete Test Folder",
+      "type": "shell",
+      "command": "rm",
+      "args": [
+          "-rf",
+          "./test"
+      ],
+      "group": {
+        "kind": "test",
         "isDefault": true
       },
       "presentation": {
