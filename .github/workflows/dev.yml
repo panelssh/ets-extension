@@ -20,3 +20,10 @@ jobs:
         run: ./node_modules/.bin/tslint -p tsconfig.json -c tslint.json
       - name: TSC
         run: tsc
+      - name: Prune
+        run: npm prune --production
+      - name: List File
+        run: |
+          ls -la
+          ls -la ./dist
+          ls -la ./node_modules
