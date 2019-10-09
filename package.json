@@ -11,8 +11,7 @@
     "vscode": "^1.24.0"
   },
   "categories": [
-    "Snippets",
-    "Language Packs"
+    "Other"
   ],
   "keywords": [
     "ExpressJS",
@@ -41,14 +40,14 @@
         "command": "ets.rcm",
         "title": "ETS Extension: Create Router, Controller and model"
       }
+    ],
+    "keybindings": [
+      {
+        "command": "ets.rcm",
+        "key": "alt+x r"
+      }
     ]
   },
-  "keybindings": [
-    {
-      "command": "ets.rcm",
-      "key": "alt+x r"
-    }
-  ],
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
     "prebuild": "tslint -p tsconfig.json -c tslint.json",
