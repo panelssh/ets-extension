@@ -46,20 +46,19 @@
   "keybindings": [
     {
       "command": "ets.rcm",
-      "key": "alt+x r",
-      "mac": "alt+x r"
+      "key": "ctrl+e r"
     }
   ],
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
     "prebuild": "tslint -p tsconfig.json -c tslint.json",
-    "build": "npm-run-all clean:** package:** clean:**",
+    "build": "npm-run-all clean:* package:* clean:*",
     "clean:dist": "rm -rf ./dist",
-    "clean:visx": "rm -rf ./ets-extension-1.1.0.vsix",
+    "clean:visx": "rm -rf ./ets-extension-%npm_package_version%.vsix",
     "package:uninstall": "code --uninstall-extension panelssh.ets-extension",
-    "package:removepath": "rm -rf ~/.vscode/extensions/panelssh.ets-extension-1.1.0",
+    "package:removepath": "rm -rf ~/.vscode/extensions/panelssh.ets-extension-%npm_package_version%",
     "package:build": "vsce package",
-    "package:install": "code --install-extension ets-extension-1.1.0.vsix --force",
+    "package:install": "code --install-extension ets-extension-%npm_package_version%.vsix --force",
     "vscode:prepublish": "tsc"
   },
   "repository": {

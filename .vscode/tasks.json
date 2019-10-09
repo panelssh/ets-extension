@@ -8,8 +8,8 @@
       "type": "shell",
       "command": "npm",
       "args": [
-          "run",
-          "build"
+        "run",
+        "build"
       ],
       "group": {
         "kind": "build",
@@ -26,8 +26,8 @@
       "type": "shell",
       "command": "rm",
       "args": [
-          "-rf",
-          "./test"
+        "-rf",
+        "./test"
       ],
       "group": {
         "kind": "test",
@@ -37,7 +37,39 @@
         "clear": true,
         "focus": false,
         "reveal": "silent"
-      }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Uninstall Extension",
+      "type": "shell",
+      "command": "npx",
+      "args": [
+        "npm-run-all",
+        "package:uninstall",
+        "package:removepath"
+      ],
+      "presentation": {
+        "clear": true,
+        "focus": false,
+        "reveal": "silent"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Clean Dist and Visx",
+      "type": "shell",
+      "command": "npx",
+      "args": [
+        "npm-run-all",
+        "clean:*"
+      ],
+      "presentation": {
+        "clear": true,
+        "focus": false,
+        "reveal": "silent"
+      },
+      "problemMatcher": []
     }
   ]
 }
