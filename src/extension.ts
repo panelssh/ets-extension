@@ -3,7 +3,7 @@ import { ExtensionContext, commands, workspace, window } from 'vscode';
 // builds
 import { rcm } from './build';
 // helpers
-import { camelize } from './helpers';
+import { camelize, search } from './helpers';
 
 const path = workspace.workspaceFolders[0].uri.fsPath;
 
@@ -26,16 +26,37 @@ export function activate(context: ExtensionContext) {
       },
     }).then((nameRCM: string) => {
 
-      const src = workspace.getConfiguration('ets').target || 'src';
-      const name = camelize(nameRCM);
+      if (nameRCM === undefined) return;
 
-      for (const [i, type] of types.entries()) {
-        if (!rcm(type, path, src, name)) {
-          window.showErrorMessage(`${src}/${type}/${name.toLowerCase()}.ts already exists!`);
-          break;
+      window.showInputBox({
+        prompt: 'Type of RCM (routers, controllers, models, middleware, dto, interfaces)',
+        placeHolder: 'Set RCM type, (leave if want to all)',
+        validateInput: (typeRCM: string): string | undefined => {
+          if (typeRCM && !types.includes(typeRCM)) return search(typeRCM, types);
+          return undefined;
+        },
+      }).then((typeRCM: string) => {
+
+        const src = workspace.getConfiguration('ets').target || 'src';
+        const name = camelize(nameRCM);
+
+        if (typeRCM) {
+          if (!rcm(typeRCM, path, src, name)) {
+            window.showErrorMessage(`${src}/${typeRCM}/${name.toLowerCase()}.ts already exists!`);
+          } else {
+            window.showInformationMessage(`Created ${typeRCM} file!`);
+          }
+        } else if (typeRCM === '') {
+          for (const [i, type] of types.entries()) {
+            if (!rcm(type, path, src, name)) {
+              window.showErrorMessage(`${src}/${type}/${name.toLowerCase()}.ts already exists!`);
+              break;
+            }
+            if (i === types.length - 1) window.showInformationMessage('Created RCM file!');
+          }
         }
-        if (i === types.length - 1) window.showInformationMessage('Created RCM file!');
-      }
+
+      });
 
     });
   });

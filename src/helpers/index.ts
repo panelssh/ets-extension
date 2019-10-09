@@ -20,3 +20,15 @@ export function camelize(text: string): string {
   words.slice(1).forEach((word: string) => result.push(capitalize(word)));
   return result.join('');
 }
+
+/**
+ * Find element in array using regex match without iterating over array
+ * @param {String} text - Keywords
+ * @param {Array} data - list data
+ * @source https://jsbin.com/qemeseyeme/edit?js,console
+ */
+export function search(text: string, data: string[]): string {
+  const check = data.findIndex(find => find.match(text));
+  if (check === -1) return `type ${text} is not allowed!`;
+  return `You mean ${data[check]}?`;
+}

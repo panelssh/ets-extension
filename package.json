@@ -46,7 +46,7 @@
   "keybindings": [
     {
       "command": "ets.rcm",
-      "key": "ctrl+e r"
+      "key": "alt+x r"
     }
   ],
   "scripts": {
